@@ -18,7 +18,7 @@ class PrimeFactors {
     fun convertToString(primeFactors: List<Int>): String {
         var result = ""
         for (fact in primeFactors) {
-            result = "$result,$fact"
+            result = "$result   $fact"
         }
 
         return result
