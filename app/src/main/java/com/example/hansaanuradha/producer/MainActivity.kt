@@ -4,13 +4,14 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import java.util.ArrayList
+
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
 
         // Lets try to get the intent object
         when {
@@ -51,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         sendIntent.putExtra(Intent.EXTRA_TEXT, result)
         sendIntent.type = "text/plain"
         startActivity(Intent.createChooser(sendIntent, resources.getText(R.string.send_to)))
+
     }
 
 
