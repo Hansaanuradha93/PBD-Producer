@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
 
             // Split the values and create a string array
             val values = value.split(", ")
+            val numberOfIndexes = values.size - 1
 
             // Lets find prime factors now
             val primeFactor = PrimeFactors()
@@ -68,7 +69,7 @@ class MainActivity : AppCompatActivity() {
             var result: String
 
             // Add those values to a String array list
-            for (i in 0..5) {
+            for (i in 0..numberOfIndexes) {
                 numbersInString.add(values.get(i))
 
                 // Find prime factors

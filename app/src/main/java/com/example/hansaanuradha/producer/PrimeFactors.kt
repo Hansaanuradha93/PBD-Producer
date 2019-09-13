@@ -15,11 +15,16 @@ class PrimeFactors {
         return factors
     }
 
+
     fun convertToString(number: String, primeFactors: List<Int>): String {
         var result = ""
-        for (fact in primeFactors) {
-            result = "$result   $fact,"
+        if (number.equals("0")) {
+            result = "No Prime Factors"
+        } else {
+            for (fact in primeFactors) {
+                result = "$result   $fact,"
 
+            }
         }
         val finalResult = "$number:-\t$result"
         return finalResult
