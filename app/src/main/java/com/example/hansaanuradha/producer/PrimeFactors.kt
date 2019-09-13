@@ -15,13 +15,14 @@ class PrimeFactors {
         return factors
     }
 
-    fun convertToString(primeFactors: List<Int>): String {
+    fun convertToString(number: String, primeFactors: List<Int>): String {
         var result = ""
         for (fact in primeFactors) {
-            result = "$result   $fact"
-        }
+            result = "$result   $fact,"
 
-        return result
+        }
+        val finalResult = "$number:-\t$result"
+        return finalResult
     }
 
 

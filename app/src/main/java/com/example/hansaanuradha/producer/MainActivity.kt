@@ -4,6 +4,11 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import java.util.*
+
+
+
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -30,25 +35,62 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleSendText(intent: Intent) {
-        intent.getStringExtra(Intent.EXTRA_TEXT)?.let {
+        intent.getStringExtra("SingleNumber")?.let {
             // Update UI to reflect text being shared
-            val value = intent.getStringExtra(Intent.EXTRA_TEXT)
+            val value = intent.getStringExtra("SingleNumber")
             Log.v("intent", value.toString())
 
             // Lets try to find the prime factors
             val primeFactor = PrimeFactors()
             var primeFactors: List<Int> = primeFactor.primeFactors(value)
-            var result: String = primeFactor.convertToString(primeFactors)
+            var result: String = primeFactor.convertToString(value, primeFactors)
 
             // Lets pass the result to the Consumer app
             sendIntent(result)
+        }
+
+        intent.getStringExtra("MultipleNumbers")?.let {
+            // Update UI to reflect text being shared
+            val value = intent.getStringExtra("MultipleNumbers")
+            Log.v("intent", value.toString())
+
+//            val numbersList = value.split("\\s*,\\s*")
+            var numbersInString = ArrayList<String>()
+
+
+            // Split the values and create a string array
+            val values = value.split(", ")
+
+            // Lets find prime factors now
+            val primeFactor = PrimeFactors()
+
+            var finalResult = ""
+            var result: String
+
+            // Add those values to a String array list
+            for (i in 0..5) {
+                numbersInString.add(values.get(i))
+
+                // Find prime factors
+                val primeFactorsArray = primeFactor.primeFactors(numbersInString.get(i))
+                // Convert result to a string
+                result = primeFactor.convertToString(numbersInString.get(i), primeFactorsArray)
+
+                finalResult = "$finalResult\n$result\n"
+
+            }
+
+            // Lets print the final result
+            Log.v("finalresult", finalResult)
+
+            // Lets pass the result to the Consumer app
+            sendIntent(finalResult)
         }
     }
 
     private fun sendIntent(result: String) {
         val sendIntent = Intent()
         sendIntent.action = Intent.ACTION_SEND
-//        sendIntent.putIntegerArrayListExtra(Intent.EXTRA_TEXT, result)
         sendIntent.putExtra(Intent.EXTRA_TEXT, result)
         sendIntent.type = "text/plain"
         startActivity(Intent.createChooser(sendIntent, resources.getText(R.string.send_to)))
