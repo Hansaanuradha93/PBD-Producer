@@ -3,7 +3,7 @@ package com.example.hansaanuradha.producer
 class PrimeFactors {
 
     // Lets find prime factors
-    fun primeFactors(number: String): List<Int> {
+    fun findPrimeFactors(number: String): String {
         var n = Integer.parseInt(number)
         val factors = ArrayList<Int>()
         for (i in 2..n) {
@@ -12,7 +12,9 @@ class PrimeFactors {
                 n /= i
             }
         }
-        return factors
+
+        val finalResult = convertToString(number, factors)
+        return finalResult
     }
 
 

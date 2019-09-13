@@ -7,10 +7,6 @@ import android.util.Log
 import java.util.*
 
 
-
-
-
-
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,28 +31,33 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleSendText(intent: Intent) {
+
+        // Lets handle Single Number
         intent.getStringExtra("SingleNumber")?.let {
             // Update UI to reflect text being shared
             val value = intent.getStringExtra("SingleNumber")
+            // Print the value coming from the Consumer application
             Log.v("intent", value.toString())
 
             // Lets try to find the prime factors
             val primeFactor = PrimeFactors()
-            var primeFactors: List<Int> = primeFactor.primeFactors(value)
-            var result: String = primeFactor.convertToString(value, primeFactors)
+            var result: String = primeFactor.findPrimeFactors(value)
 
             // Lets pass the result to the Consumer app
             sendIntent(result)
         }
 
+
+        // Lets handle Multiple Numbers
         intent.getStringExtra("MultipleNumbers")?.let {
             // Update UI to reflect text being shared
             val value = intent.getStringExtra("MultipleNumbers")
+
+            // Print the value coming from the Consumer application
             Log.v("intent", value.toString())
 
-//            val numbersList = value.split("\\s*,\\s*")
+            // Create arrays list
             var numbersInString = ArrayList<String>()
-
 
             // Split the values and create a string array
             val values = value.split(", ")
@@ -73,22 +74,21 @@ class MainActivity : AppCompatActivity() {
                 numbersInString.add(values.get(i))
 
                 // Find prime factors
-                val primeFactorsArray = primeFactor.primeFactors(numbersInString.get(i))
-                // Convert result to a string
-                result = primeFactor.convertToString(numbersInString.get(i), primeFactorsArray)
+                result = primeFactor.findPrimeFactors(numbersInString.get(i))
 
                 finalResult = "$finalResult\n$result\n"
 
             }
 
             // Lets print the final result
-            Log.v("finalresult", finalResult)
+            Log.v("final_result", finalResult)
 
             // Lets pass the result to the Consumer app
             sendIntent(finalResult)
         }
     }
 
+    // Send a new intent to an application
     private fun sendIntent(result: String) {
         val sendIntent = Intent()
         sendIntent.action = Intent.ACTION_SEND
